@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    LogIn
+{% endblock title %}
+
+{% block bg-img %}
+<img src="static/assets/img/gym.jpg" alt="" data-aos="fade-in">
+{% endblock bg-img %}
+
+{% block head %}
+
+
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+<h2>LogIn Here<span>.</span></h2>
+<hr>
+<div class='container'></div>
+<form method='post'>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Username</label>
+      <input name='username' type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    {% comment %} <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email</label>
+        <input name='email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div> {% endcomment %}
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input name='password' type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <button type="submit" class="btn btn-primary">LogIn</button>
+  </form>
+  <br><a href='{% url "SignUp" %}'>Don't Have Account? SignUp</a>
+</div>
+
+{% endblock head %}

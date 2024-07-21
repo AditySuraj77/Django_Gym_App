@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Attendence
+{% endblock title %}
+
+{% block bg-img %}
+<img src="static/assets/img/gym.jpg" alt="" data-aos="fade-in">
+{% endblock bg-img %}
+
+{% block head %}
+
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+<h2>Attendence<span>.</span></h2>
+<hr>
+<div class='container'>
+<form method='post'>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">UserName</label>
+      <input required name='username' value='{{request.user}}' type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">LogIn Time</label>
+      <input required name='logintime' type="datetime-local" required class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">LogOut Time</label>
+      <input required name='logouttime' type="datetime-local" required class="form-control" id="exampleInputPassword1">
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">WorkOut Type</label>
+      <select class="form-control mt-2" id="gender" name="WorkOut_type" required>
+        <option selected>Select WorkOut</option>
+        <option value="Trademill">Trademill</option>
+        <option value="Shoulder">Shoulder</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Trainer</label>
+      <select class="form-control mt-2" id="gender" name="trainer" required>
+        <option selected>Select Trainer</option>
+        {% for t in Trainer %}
+        <option value="{{t.Name}}">{{t.Name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Apply Attendence</button>
+  </form>
+</div>
+{% if request.user.is_authenticated %}
+
+<table class="table mt-5">
+  <thead>
+    <tr>
+      <th scope="col">UserName</th>
+      <th scope="col">LogIn Time</th>
+      <th scope="col">LogOut Time</th>
+      <th scope="col">WorkOut_Type</th>
+      <th scope="col">Trainer</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in attendence %}
+    <tr>
+      <td>{{a.User_Name}}</td>
+      <td>{{a.Login_Time}}</td>
+      <td>{{a.Logout_Time}}</td>
+      <td>{{a.Workout_Type}}</td>
+      <td>{{a.Trained_By}}</td>
+      <td><a href="{% url "Delete_attendence" a.id %}" class="btn btn-danger">Delete</a> </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+</div>
+{% endblock head %}
